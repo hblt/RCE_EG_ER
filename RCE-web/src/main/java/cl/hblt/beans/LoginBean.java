@@ -9,7 +9,7 @@ package cl.hblt.beans;
 import cl.hblt.models.Usuario;
 import cl.hblt.sessions.UsuarioFacade;
 import cl.hblt.sessions.UsuarioFacadeLocal;
-import cl.hblt.utitities.CadenasRCE;
+import cl.hblt.utilities.CadenasRCE;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -43,7 +43,7 @@ public class LoginBean {
     Usuario rs= usuarioFacade.login(usuario);
     if(rs != null){
       contenido.getExternalContext().redirect(request.getContextPath() + "/views/desktop.xhtml");
-      extcontenido.getSessionMap().put(CadenasRCE.LOGIN_USER.toString(), usuario);
+      extcontenido.getSessionMap().put(CadenasRCE.LOGIN_USER.toString(), rs);
     }else{
       contenido.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verificar Datos Ingresados"));
     }

@@ -6,22 +6,25 @@
       xmlns:f="http://java.sun.com/jsf/core">
   <h:head>
     <title>Facelet Title</title>
+    <link href="/RCE-web/resources/css/login.css" rel="stylesheet" type="text/css"/>
   </h:head>
   <h:body>
-    <h:form>
-      <p:panel header="Acceso de Sistema" footer="&copy; Hospital Barros Luco Trudeau">
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputLabel for="lblUsuario" value="Usuario:" />
-            <p:inputText id="txtUsuario" required="true" label="lblUsuario" />
-             
-            <h:outputLabel for="lblContrasena" value="Contraseña:" />
-            <p:password id="txtContrasena" required="true" label="lblContrasena" />
-             
-            <f:facet name="footer">
-                <p:commandButton id="cmdGuardar" value="Login" />
-            </f:facet>
-        </h:panelGrid>
-      </p:panel>
+    <h:form id="frmLogin">
+      <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+      <div class="container">
+        <p:panel header="Acceso de Sistema" footer="&copy; Hospital Barros Luco Trudeau">
+          <h:panelGrid columns="2" cellpadding="5">
+              <h:outputLabel for="lblUsuario" value="Usuario:" />
+              <p:inputText id="lblUsuario" required="required" label="lblUsuario" value="#{loginBean.usuario.usuaName}" />
+
+              <h:outputLabel for="lblContrasena" value="Contraseña:" />
+              <p:password id="lblContrasena" required="required" label="lblContrasena" value="#{loginBean.usuario.usuaPass}" />
+              <f:facet name="footer">
+                <p:commandButton id="cmdGuardar" value="Login"  actionListener="#{loginBean.setLogin(evt)}" />
+              </f:facet>
+          </h:panelGrid>
+        </p:panel>
+      </div>
     </h:form>
   </h:body>
 </html>

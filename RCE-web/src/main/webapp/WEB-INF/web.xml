@@ -13,11 +13,27 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+    <!--Configuración del tiempo de session-->
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <!--Configuración de Temas para primefaces-->
+    <context-param>  
+        <param-name>primefaces.THEME</param-name>  
+        <param-value>bootstrap</param-value>  
+    </context-param> 
+    <!--Filtro para la conexion de Usuario-->
+    <filter>
+      <filter-name>FilterSecurity</filter-name>
+      <filter-class>cl.hblt.security.Filter</filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>FilterSecurity</filter-name>
+      <url-pattern>/views/*</url-pattern>
+    </filter-mapping>
+    <!--Pagina de Inicio-->
     <welcome-file-list>
         <welcome-file>views/desktop.xhtml</welcome-file>
     </welcome-file-list>

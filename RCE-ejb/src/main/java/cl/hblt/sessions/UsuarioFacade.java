@@ -7,9 +7,12 @@
 package cl.hblt.sessions;
 
 import cl.hblt.models.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
   public UsuarioFacade() {
     super(Usuario.class);
   }
-  
+
+  @Override
+  public Usuario login(Usuario usuario) {
+    try{
+      Query query = em.createNamedQuery("Usuario.loginUsuario");
+      query.setParameter("user", usuario.getUsuaName());
+      query.setParameter("pass", usuario.getUsuaPass());
+      Usuario u = (Usuario) query.getSingleResult();
+      if(u==null){
+        return null;
+      }else{
+        return u;
+      }
+    }catch (NoResultException nre){
+    //Ignore this because as per your logic this is ok!
+    }
+    return null;
+  }
 }

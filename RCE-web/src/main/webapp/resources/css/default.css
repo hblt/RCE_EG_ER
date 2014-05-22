@@ -28,3 +28,7 @@ a:link:hover, a:visited:hover  {
   font-weight : bold;
   text-decoration : underline;
 }
+.ui-widget .ui-icon.ui-icon-window,
+.ui-menu.ui-widget li > .ui-menuitem-link.ui-state-hover .ui-icon.ui-icon-window{
+    background-image: url('../../resources/images/inicio.png');
+}

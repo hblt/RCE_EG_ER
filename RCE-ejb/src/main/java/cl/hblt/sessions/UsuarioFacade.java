@@ -7,7 +7,6 @@
 package cl.hblt.sessions;
 
 import cl.hblt.models.Usuario;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

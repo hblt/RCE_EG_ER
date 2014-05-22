@@ -21,18 +21,15 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
  * @author Edwin Guaman
- */
+ **/
 @ManagedBean
 @RequestScoped
 public class LoginBean {
   @EJB
   private final UsuarioFacadeLocal usuarioFacade;
   private Usuario usuario;
-
   /***
-   * 
    * @param evt
    * @throws IOException 
    */
@@ -48,16 +45,13 @@ public class LoginBean {
       contenido.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verificar Datos Ingresados"));
     }
   }
-  
   public LoginBean() {
     usuario = new Usuario();
     usuarioFacade = new UsuarioFacade();
   }
-
   public Usuario getUsuario() {
     return usuario;
   }
-
   public void setUsuario(Usuario usuario) {
     this.usuario = usuario;
   }

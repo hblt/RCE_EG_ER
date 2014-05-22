@@ -68,8 +68,9 @@ public class DesktopBeans {
         menuBar = new DefaultMenuModel();
         List<Menu> menu = this.getMenu();
         
-        DefaultSubMenu inicio = new DefaultSubMenu("Inicio");
+        DefaultSubMenu inicio = new DefaultSubMenu();
         inicio.setIcon("ui-icon-window");
+        
         if(!menu.isEmpty()){
             
             for (Menu m : menu) { 
@@ -84,6 +85,7 @@ public class DesktopBeans {
                         if(m.getIdMenu() == m2.getIdMenupadre())
                         {
                             DefaultMenuItem menuItem = new DefaultMenuItem(m2.getMenuNombre());
+                            
                             subMenu.addElement(menuItem);
                         }
                     } 

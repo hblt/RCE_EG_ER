@@ -12,11 +12,21 @@
             <ui:define name="content">
   
             <h:form id="formDataTable">
-                <p:menubar model="#{desktopBeans.menuBar}"/>
+                <p:menubar model="#{desktopBean.menuBar}"/>
                 <p/>
-                <p:dataTable id="menu" var="menu" value="#{desktopBeans.menu}">
-                     <p:column headerText="Menu ID" style="width:50%">
-                         <h:outputText value="#{menu.idMenu}" />
+                <p:menubar>
+                    <p:submenu label="Menu">
+                        <p:menuitem actionListener="#{redirectLogin.endLogin(evt)}" value="Abrir Pagina"/>
+                        <p:menuitem actionListener="index.xhtml" value="Abrir Pagina2"/>
+                        <p:menuitem action="(index.xhtml).show()" value="Abrir Pagina3"/>
+                        <p:menuitem url="views/index.xhtml" value="Abrir Pagina4"/>
+                        <p:menuitem url="index.xhtml" value="Abrir Pagina5"/>
+                        <p:menuitem onclick="PF('terminal').show();" value="Abrir Panel"/>    
+                    </p:submenu>
+                </p:menubar>
+                <p:dataTable id="menu" var="menu" value="#{desktopBean.menu}">
+                    <p:column headerText="Menu ID" style="width:50%">
+                        <h:outputText value="#{menu.idMenu}" />
                     </p:column>
                     <p:column headerText="Menu Padre" style="width:40%">
                         <h:outputText value="#{menu.idMenupadre}" />
@@ -26,13 +36,15 @@
                     </p:column>
                     <p:column headerText="Nombre Ventana" style="width:40%">
                         <h:outputText value="#{menu.menuNombreventana}" />
-                    </p:column>
-                    
-                    <p:column style="width:10%" headerText="Acción">
-                        
-                    </p:column>
+                    </p:column> 
+                    <p:column style="width:10%" headerText="Acción"/>
                 </p:dataTable>   
             </h:form>  
+            <p:dialog widgetVar="terminal" width="600" height="400" header="Terminal" resizable="true" maximizable="true" showEffect="fade" hideEffect="fade" styleClass="terminalDialog">
+                <h:form>
+                    <p:terminal style="width:590px"  welcomeMessage="Welcome to PrimeFaces Terminal, how are you today? Try date and greet  commands."/>
+                </h:form>
+            </p:dialog>
             </ui:define>
         </ui:composition>
     </body>

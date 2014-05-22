@@ -7,8 +7,10 @@
 package cl.hblt.beans;
 
 import cl.hblt.models.Menu;
+import cl.hblt.models.Usuario;
 import cl.hblt.sessions.MenuFacade;
 import cl.hblt.sessions.MenuFacadeLocal;
+import cl.hblt.sessions.UsuarioFacadeLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,97 +23,76 @@ import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 
 /**
- *
- * @author cabldgti09
- */
+ * @author Emanuel Roco
+ * @correo emanuelroco@gmail.com
+ **/
 @ManagedBean
 @RequestScoped
-public class DesktopBeans {
+public class DesktopBean {
     
     @EJB
     private MenuFacadeLocal menuFacadeLocal;
     private List<Menu> menu;
-    private PieChartModel chart;
+    
+    private List<Usuario> usuario;
+    private UsuarioFacadeLocal usuarioFacadeLocal;
+    
     private MenuModel menuBar;
 
-
-    public DesktopBeans() {
-        this.menu = new ArrayList<Menu>();
-        menuFacadeLocal = new MenuFacade();
-        
-        llenaChart();
+    public DesktopBean()  {
+        /*
+        //Obtengo un usuario del sistema para remplazar el session si llega algo pasa el login. si no se va index nuevamente.
+        this.usuario = new ArrayList<Usuario>();
+        usuarioFacadeLocal = new UsuarioFacade();
+        usuario = usuarioFacadeLocal.findAll();
+        if( usuario != null){*/
+            
+            this.menu = new ArrayList<Menu>();
+            menuFacadeLocal = new MenuFacade(); 
+        /* 
+        }else{
+            
+            FacesContext contenido = FacesContext.getCurrentInstance();
+            HttpServletRequest request2 = (HttpServletRequest) contenido.getExternalContext().getRequest();
+            contenido.getExternalContext().redirect(request2.getContextPath() + "/index.xhtml");
+            
+        }  
+        */
     }
-
     public List<Menu> getMenu(){
+        //Obtengo todos los menu de la base de datos.
         this.menu = menuFacadeLocal.findAll();
         return menu;
     }
-
-    //MENU BAR
-    private void llenaMenuBar(){
-        System.out.println("Llegue a llenaMenuBar");
-        
-        /*
-        DefaultSubMenu subMenu2 = new DefaultSubMenu("Pacientes");
-        DefaultMenuItem menuItem2 = new DefaultMenuItem("Ingresar Pacientes");
-        DefaultMenuItem menuItem3 = new DefaultMenuItem("Eliminar Pacientes");
-        DefaultMenuItem menuItem4 = new DefaultMenuItem("Listar Pacientes");
-        subMenu2.addElement(menuItem2);
-        subMenu2.addElement(menuItem3);
-        subMenu2.addElement(menuItem4);
-        
-        menuBar.addElement(subMenu2);
-        menuBar.generateUniqueIds();
-        */
-    }
     public MenuModel getMenuBar() {
+        //creo el menu bar que se visualiza arriba en el escriorio
         menuBar = new DefaultMenuModel();
+        //obtengo todos los menus
         List<Menu> menu = this.getMenu();
-        
+        //genero el primer submenu LLamado Inicio para emular el de Window
         DefaultSubMenu inicio = new DefaultSubMenu();
+        //Agrego el icono de window
         inicio.setIcon("ui-icon-window");
         
-        if(!menu.isEmpty()){
-            
+        //creo los menus padres e hijos. FALTA QUE SEA DINAMICO PARA MAS DE 3 SUB MENUS
+        if(!menu.isEmpty()){           
             for (Menu m : menu) { 
-                
                 if(m.getIdMenupadre() == 0){
-                    
                     //creo el menu padre
                     DefaultSubMenu subMenu = new DefaultSubMenu(m.getMenuNombre());
                     inicio.addElement(subMenu);
-                    
                     for (Menu m2 : menu) {
-                        if(m.getIdMenu() == m2.getIdMenupadre())
-                        {
+                        if(m.getIdMenu() == m2.getIdMenupadre()) {
                             DefaultMenuItem menuItem = new DefaultMenuItem(m2.getMenuNombre());
-                            
+                            menuItem.setHref(m2.getMenuUrl());
                             subMenu.addElement(menuItem);
                         }
                     } 
-                
                 }
-                
             }
         }
         menuBar.addElement(inicio);
         menuBar.generateUniqueIds();
-        
         return menuBar;
     }
-    //FIN MENU BAR
-
-    //CHART
-    private void llenaChart(){
-        System.out.println("Llegue a llenaChart");
-        chart = new PieChartModel();
-        chart.set("Me Gusta",900);
-        chart.set("No me Gusta",100);
-        chart.set("Me super agrada",1000);
-        chart.set("Lo recomiendo",300);
-    }   
-    public PieChartModel getChart(){
-        return chart;
-    }
-    //FIN CHART
 }

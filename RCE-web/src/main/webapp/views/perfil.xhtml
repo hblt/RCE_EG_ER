@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/desktopTemplate.xhtml">
+
+            <ui:define name="content">
+                
+                <p:layout fullPage="true">
+                    <p:layoutUnit position="west"  header="Usuario" resizable="true" size="300">
+                        <h:form id="formUsuario">
+                            <p:dataTable id="usuarioTable" var="usuario" value="#{perfilBean.usuario}" 
+                                         selectionMode="single" selection="#{perfilBean.selectedUsuario}" lazy="true"
+                                         rowKey="#{usuario.idUsuario}" rowIndexVar="rowIndex">
+                                <p:ajax event="rowSelect" update=":formPerfil"/>
+                                <p:column headerText="Nombre Usuario">
+                                    <h:outputText value="#{usuario.usuaName}" />
+                                </p:column>
+                                
+                            </p:dataTable>
+                        </h:form>
+                    </p:layoutUnit>  
+                    <p:layoutUnit position="center" header="Perfil" resizable="true" size="300">
+                        <h:form id="formPerfil">
+                            <p:commandButton value="Agregar Perfil" type="button" onclick="PF('dialogPerfil').show();"/>
+                            <p:dataTable id="profesionalTable" var="perfil" value="#{perfilBean.perfil}">
+                                <p:column headerText="Nombre Perfil">
+                                    <h:outputText value="#{perfil.perfNombre}" />
+                                </p:column>
+                                <p:column headerText="Acción">
+                                    <p:commandButton value="Eliminar"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                        <p:dialog widgetVar="dialogPerfil" width="170" />
+                    </p:layoutUnit>
+                    <p:layoutUnit position="east" header="Menu" resizable="true" size="300">
+                        <h:form id="formMenu">
+                        </h:form>
+                    </p:layoutUnit>
+                </p:layout>
+                
+            </ui:define>      
+        </ui:composition>
+
+    </body>
+</html>

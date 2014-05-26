@@ -16,10 +16,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import org.primefaces.model.chart.PieChartModel;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuItem;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -38,8 +38,12 @@ public class DesktopBean {
     private UsuarioFacadeLocal usuarioFacadeLocal;
     
     private MenuModel menuBar;
+    
+    private DialogBean  dialogBean;
 
+    
     public DesktopBean()  {
+      dialogBean= new DialogBean();
         /*
         //Obtengo un usuario del sistema para remplazar el session si llega algo pasa el login. si no se va index nuevamente.
         this.usuario = new ArrayList<Usuario>();
@@ -84,8 +88,15 @@ public class DesktopBean {
                     for (Menu m2 : menu) {
                         if(m.getIdMenu() == m2.getIdMenupadre()) {
                             DefaultMenuItem menuItem = new DefaultMenuItem(m2.getMenuNombre());
-                            menuItem.setHref(m2.getMenuUrl());
+                            String command = String.format("#{dialogBean.open('%s')}", m2.getMenuUrl());
+                            menuItem.setCommand(command);
+                            //menuItem.setOnclick("alert('"+m2.getMenuUrl()+"');");
+                            //menuItem.setHref(m2.getMenuUrl());
+                            
+                            menuItem.setAjax(true);
+                            menuItem.setRendered(true);
                             subMenu.addElement(menuItem);
+                            
                         }
                     } 
                 }
@@ -95,4 +106,13 @@ public class DesktopBean {
         menuBar.generateUniqueIds();
         return menuBar;
     }
+
+  public DialogBean getDialogBean() {
+    return dialogBean;
+  }
+
+  public void setDialogBean(DialogBean dialogBean) {
+    this.dialogBean = dialogBean;
+  }
+    
 }

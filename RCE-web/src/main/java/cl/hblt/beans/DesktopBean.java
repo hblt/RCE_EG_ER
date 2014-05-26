@@ -114,5 +114,4 @@ public class DesktopBean {
   public void setDialogBean(DialogBean dialogBean) {
     this.dialogBean = dialogBean;
   }
-    
 }

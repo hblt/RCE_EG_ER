@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/desktopTemplate.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <p:layout fullPage="true">
+                    <p:layoutUnit position="center" header="Usuarios" resizable="true">
+                       <h:form id="formUsuario">
+                            <p:dataTable id="usuarioTable" var="usuario" value="#{usuarioPerfilMenuBean.usuario}" 
+                                         selectionMode="single" selection="#{usuarioPerfilMenuBean.selectedUsuario}" lazy="true"
+                                         rowKey="#{usuario.idUsuario}" rowIndexVar="rowIndex">
+                                <p:ajax event="rowSelect" update=":formCreateUsuarioPerfil"/>
+                                <p:column>
+                                    <h:outputText value="#{usuario.usuaName}" />
+                                </p:column>
+                                
+                            </p:dataTable>
+                        </h:form>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="east" resizable="true" size="500">
+                        <p:panel header="Perfil">
+                            <h:form id="formPerfil">
+                                <p:commandButton value="Agregar Perfil" type="button" onclick="PF('dialogCreateUsuarioPerfil').show();"/>
+                                <p:dataTable id="profesionalTable"  var="perfil" value="#{usuarioPerfilMenuBean.perfil}">
+                                    <p:column headerText="Nombre Perfil">
+                                        <h:outputText value="#{perfil.perfNombre}" />
+                                    </p:column>
+                                    <p:column headerText="Acción">
+                                        <p:commandButton value="Eliminar"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </p:panel>
+                        <p:panel header="Menu">
+                            <h:form id="formMenu">
+                                <p:commandButton value="Agregar Menu" type="button" onclick="PF('dialogCreateUsuarioMenu').show();"/>
+                                <p:dataTable id="profesionalTable" var="menu" value="#{usuarioPerfilMenuBean.menu}">
+                                    <p:column headerText="Nombre Menu">
+                                        <h:outputText value="#{menu.menuNombre}" />
+                                    </p:column>
+                                    <p:column headerText="Acción" width="100">
+                                        <p:commandButton value="Eliminar"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </p:panel>              
+                    </p:layoutUnit>
+                    
+                    <h:form id="formCreateUsuarioPerfil">
+                        <p:dialog header="Agregar Perfil a Usuario" widgetVar="dialogCreateUsuarioPerfil" resizable="false" id="dlgUsuarioPerfil"
+                                  showEffect="fade" hideEffect="explode" modal="false" width="500">
+                            <h:panelGrid id="panelUsuarioPerfil" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                                <h:outputText value="Usuario: " />
+                                <h:outputText value="#{usuarioPerfilMenuBean.selectedUsuario.usuaName}"/>
+                                
+                                <h:outputText value="Perfil:" />
+                                
+                                <p:selectOneMenu value="#{usuarioPerfilMenuBean.perfiles}">
+                                    <f:selectItem itemLabel="Seleccione un perfil" itemValue="" />
+                                    <f:selectItems value="#{usuarioPerfilMenuBean.perfil}" var="varPerfil"  itemLabel="#{varPerfil.perfNombre}" itemValue="#{varPerfil.idPerfil}" />
+                                </p:selectOneMenu>
+                                
+                                
+                                <f:facet name="footer">
+                                    <p:separator/>
+                                    <p:commandButton id="btnCreateAceptar" update=":formPerfil" 
+                                             value="Guardar" type="button" 
+                                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+                                             actionListener="#{usuarioPerfilMenuBean.btnCreateUsuarioPerfil(actionEvent)}"
+                                             oncomplete="dialogCreateUsuarioPerfil.hide()" title="Guardar"/> 
+
+                                     <p:commandButton id="btnCreateCancelar" value="Cancelar" 
+                                             type="button" styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-check" onclick="dialogCreateUsuarioPerfil.hide()"
+                                             title="Cancelar"/> 
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+                    <h:form id="formCreateUsuarioMenu">
+                        <p:dialog header="Agregar Menu a Perfil" widgetVar="dialogCreateUsuarioMenu" resizable="false" id="dlgUsuarioMenu"
+                                  showEffect="fade" hideEffect="explode" modal="false" width="500">
+                            <h:panelGrid id="panelUsuarioMenu" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                                <h:outputText value="Perfil: " />
+                                <h:outputText value="#{usuarioPerfilMenuBean.selectedUsuario.usuaName}"/>
+                                
+                                <h:outputText value="Menu: " />
+                                
+                                <p:selectOneMenu value="#{usuarioPerfilMenuBean.menus}">
+                                    <f:selectItem itemLabel="Seleccione un menu" itemValue="" />
+                                    <f:selectItems value="#{usuarioPerfilMenuBean.menu}" var="varMenu"  itemLabel="#{varMenu.menuNombre}" itemValue="#{varMenu.idMenu}" />
+                                </p:selectOneMenu>
+                                
+                                
+                                <f:facet name="footer">
+                                    <p:separator/>
+                                    <p:commandButton id="btnCreateAceptar" update=":formPerfil" 
+                                             value="Guardar" type="button" 
+                                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+                                             actionListener="#{usuarioPerfilMenuBean.btnCreateUsuarioPerfil(actionEvent)}"
+                                             oncomplete="dialogCreateUsuarioMenu.hide()" title="Guardar"/> 
+
+                                     <p:commandButton id="btnCreateCancelar" value="Cancelar" 
+                                             type="button" styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-check" onclick="dialogCreateUsuarioMenu.hide()"
+                                             title="Cancelar"/> 
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+                </p:layout>
+            </ui:define>      
+        </ui:composition>
+
+    </body>
+</html>

@@ -3,12 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
-  
+      xmlns:h="http://java.sun.com/jsf/html">
+
     <body>
-        <ui:composition template="./../templates/desktopTemplate.xhtml">  
+
+        <ui:composition template="./../templates/desktopTemplate.xhtml">
+
             <ui:define name="content">
   
             <h:form id="formDataTable">
@@ -44,7 +44,10 @@
                     <p:terminal style="width:590px"  welcomeMessage="Welcome to PrimeFaces Terminal, how are you today? Try date and greet  commands."/>
                 </h:form>
             </p:dialog>
+                <p:menubar model="#{desktopBean.menuBar}"/>
             </ui:define>
+            
         </ui:composition>
+
     </body>
 </html>

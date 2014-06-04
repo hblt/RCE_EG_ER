@@ -1,53 +1,32 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
-
-    <body>
-
-        <ui:composition template="./../templates/desktopTemplate.xhtml">
-
-            <ui:define name="content">
-  
-            <h:form id="formDataTable">
-                <p:menubar model="#{desktopBean.menuBar}"/>
-                <p/>
-                <p:menubar>
-                    <p:submenu label="Menu">
-                        <p:menuitem actionListener="#{dialogBean.demo1()}" value="Abrir Pagina"/>
-                        <p:menuitem actionListener="#{dialogBean.demo()}" value="Abrir Pagina2"/>
-                        <p:menuitem action="(index.xhtml).show()" value="Abrir Pagina3"/>
-                        <p:menuitem url="views/index.xhtml" value="Abrir Pagina4"/>
-                        <p:menuitem onclick="PF('terminal').show();" value="Abrir Panel"/>    
-                    </p:submenu>
-                </p:menubar>
-                <p:dataTable id="menu" var="menu" value="#{desktopBean.menu}">
-                    <p:column headerText="Menu ID" style="width:50%">
-                        <h:outputText value="#{menu.idMenu}" />
-                    </p:column>
-                    <p:column headerText="Menu Padre" style="width:40%">
-                        <h:outputText value="#{menu.idMenupadre}" />
-                    </p:column>
-                    <p:column headerText="Menu Nombre" style="width:50%">
-                        <h:outputText value="#{menu.menuNombre}" />
-                    </p:column>
-                    <p:column headerText="Nombre Ventana" style="width:40%">
-                        <h:outputText value="#{menu.menuNombreventana}" />
-                    </p:column> 
-                    <p:column style="width:10%" headerText="Acción"/>
-                </p:dataTable>   
-            </h:form>  
-            <p:dialog widgetVar="terminal" width="600" height="400" header="Terminal" resizable="true" maximizable="true" showEffect="fade" hideEffect="fade" styleClass="terminalDialog" >
-                <h:form>
-                    <p:terminal style="width:590px"  welcomeMessage="Welcome to PrimeFaces Terminal, how are you today? Try date and greet  commands."/>
-                </h:form>
-            </p:dialog>
-                <p:menubar model="#{desktopBean.menuBar}"/>
-            </ui:define>
-            
-        </ui:composition>
-
-    </body>
+      xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
+    <title>Facelet Title</title>
+    <link href="../resources/css/default.css" rel="stylesheet" type="text/css"/>
+  </h:head>
+  <h:body>
+    <h:form id="frmDesktop">
+      <p:growl id="messages" showDetail="false"/>
+      <p:menubar id="menu2">
+        <p:submenu label="Inicio" icon="ui-icon-window">
+          <p:submenu label="Usuario" icon="ui-icon-contact">
+            <p:menuitem value="Ingresar Usuario" actionListener="#{dialogBean.getOpen('Usuario/usuarioList')}" />
+            <p:menuitem value="Asignar Perfil" actionListener="#{dialogBean.getOpen('usuarioPerfilMenu')}" />
+          </p:submenu>
+          <p:menuitem value="Open" url="#" />
+          <p:separator />
+          <p:menuitem value="Quit" url="#" />
+        </p:submenu>
+        <f:facet name="options">
+          <p:outputLabel style="margin-right:10px" value="#{desktopBean.user.usuaName}"/>
+          <p:commandButton type="button" value="Cerrar Sesión" icon="ui-icon-extlink" />
+        </f:facet>
+      </p:menubar>
+      
+      </h:form>
+  </h:body>
 </html>

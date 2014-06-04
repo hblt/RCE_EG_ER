@@ -33,3 +33,13 @@ a:link:hover, a:visited:hover  {
     background-image: url('../../resources/images/inicio.png');
 }
 
+.center{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ui-dialog-content.ui-widget-content{
+  min-width: 900px !important;
+  min-height: 600px !important;
+}
+

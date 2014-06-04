@@ -7,7 +7,7 @@
 package cl.hblt.models;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,10 +34,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+  @NamedQuery(name = "Usuario.findAllRelacionado", query = "SELECT u FROM Usuario u JOIN u.idProfesional p JOIN p.idCargo c JOIN p.idSubespecialidad sb JOIN sb.idEspecialidad JOIN u.idPersona pe "),
   @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
   @NamedQuery(name = "Usuario.findByUsuaName", query = "SELECT u FROM Usuario u WHERE u.usuaName = :usuaName"),
   @NamedQuery(name = "Usuario.findByUsuaPass", query = "SELECT u FROM Usuario u WHERE u.usuaPass = :usuaPass"),
-  @NamedQuery(name = "Usuario.loginUsuario",query="Select u FROM Usuario u WHERE u.usuaName= :user AND u.usuaPass=md5(:pass)"),
+  @NamedQuery(name = "Usuario.loginUsuario", query="Select u FROM Usuario u WHERE u.usuaName= :user AND u.usuaPass=md5(:pass)"),
   @NamedQuery(name = "Usuario.findByUsuaIntentosfallidos", query = "SELECT u FROM Usuario u WHERE u.usuaIntentosfallidos = :usuaIntentosfallidos")})
   
 public class Usuario implements Serializable {
@@ -55,11 +56,14 @@ public class Usuario implements Serializable {
   private String usuaPass;
   @Column(name = "usua_intentosfallidos")
   private Integer usuaIntentosfallidos;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-  private Collection<UsuarioPerfil> usuarioPerfilCollection;
   @JoinColumn(name = "id_profesional", referencedColumnName = "id_profesional")
   @ManyToOne
   private Profesional idProfesional;
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+  @ManyToOne
+  private Persona idPersona;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+  private List<UsuarioPerfil> usuarioperfilList;
 
   public Usuario() {
   }
@@ -100,21 +104,29 @@ public class Usuario implements Serializable {
     this.usuaIntentosfallidos = usuaIntentosfallidos;
   }
 
-  @XmlTransient
-  public Collection<UsuarioPerfil> getUsuarioPerfilCollection() {
-    return usuarioPerfilCollection;
-  }
-
-  public void setUsuarioPerfilCollection(Collection<UsuarioPerfil> usuarioPerfilCollection) {
-    this.usuarioPerfilCollection = usuarioPerfilCollection;
-  }
-
   public Profesional getIdProfesional() {
     return idProfesional;
   }
 
   public void setIdProfesional(Profesional idProfesional) {
     this.idProfesional = idProfesional;
+  }
+
+  public Persona getIdPersona() {
+    return idPersona;
+  }
+
+  public void setIdPersona(Persona idPersona) {
+    this.idPersona = idPersona;
+  }
+
+  @XmlTransient
+  public List<UsuarioPerfil> getUsuarioperfilList() {
+    return usuarioperfilList;
+  }
+
+  public void setUsuarioperfilList(List<UsuarioPerfil> usuarioperfilList) {
+    this.usuarioperfilList = usuarioperfilList;
   }
 
   @Override

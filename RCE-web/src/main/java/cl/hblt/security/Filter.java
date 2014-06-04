@@ -32,17 +32,19 @@ public class Filter implements javax.servlet.Filter{
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-    Usuario u = (Usuario)((HttpServletRequest) request).getAttribute(CadenasRCE.LOGIN_USER.toString());
-    if(u==null){
+    Usuario u = (Usuario)((HttpServletRequest) request).getSession().getAttribute(CadenasRCE.LOGIN_USER.toString());
+    if(u!=null){
+      System.out.println("Usuario es:"+ u.getUsuaName());
       chain.doFilter(request, response);
     }else{
+      System.out.println("Usuario es nulo");
       ((HttpServletResponse) response).sendRedirect("http://localhost:8080/RCE-web/index.xhtml");
     }
   }
 
   @Override
   public void destroy() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    config = null;
   }
   
 }

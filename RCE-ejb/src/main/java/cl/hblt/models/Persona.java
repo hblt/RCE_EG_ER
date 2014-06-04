@@ -7,8 +7,8 @@
 package cl.hblt.models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,7 +56,7 @@ import javax.xml.bind.annotation.XmlTransient;
   @NamedQuery(name = "Persona.findByUserModifica", query = "SELECT p FROM Persona p WHERE p.userModifica = :userModifica"),
   @NamedQuery(name = "Persona.findByUserFmodifica", query = "SELECT p FROM Persona p WHERE p.userFmodifica = :userFmodifica")})
 public class Persona implements Serializable {
-  private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
@@ -115,7 +115,9 @@ public class Persona implements Serializable {
   @Temporal(TemporalType.DATE)
   private Date userFmodifica;
   @OneToMany(mappedBy = "idPersona")
-  private Collection<Profesional> profesionalCollection;
+  private List<Paciente> pacienteList;
+  @OneToMany(mappedBy = "idPersona")
+  private List<Usuario> usuarioList;
   @JoinColumn(name = "id_religion", referencedColumnName = "id_religion")
   @ManyToOne
   private Religion idReligion;
@@ -134,8 +136,6 @@ public class Persona implements Serializable {
   @JoinColumn(name = "id_comuna", referencedColumnName = "id_comuna")
   @ManyToOne
   private Comuna idComuna;
-  @OneToMany(mappedBy = "idPersona")
-  private Collection<Paciente> pacienteCollection;
 
   public Persona() {
   }
@@ -297,12 +297,21 @@ public class Persona implements Serializable {
   }
 
   @XmlTransient
-  public Collection<Profesional> getProfesionalCollection() {
-    return profesionalCollection;
+  public List<Paciente> getPacienteList() {
+    return pacienteList;
   }
 
-  public void setProfesionalCollection(Collection<Profesional> profesionalCollection) {
-    this.profesionalCollection = profesionalCollection;
+  public void setPacienteList(List<Paciente> pacienteList) {
+    this.pacienteList = pacienteList;
+  }
+
+  @XmlTransient
+  public List<Usuario> getUsuarioList() {
+    return usuarioList;
+  }
+
+  public void setUsuarioList(List<Usuario> usuarioList) {
+    this.usuarioList = usuarioList;
   }
 
   public Religion getIdReligion() {
@@ -351,15 +360,6 @@ public class Persona implements Serializable {
 
   public void setIdComuna(Comuna idComuna) {
     this.idComuna = idComuna;
-  }
-
-  @XmlTransient
-  public Collection<Paciente> getPacienteCollection() {
-    return pacienteCollection;
-  }
-
-  public void setPacienteCollection(Collection<Paciente> pacienteCollection) {
-    this.pacienteCollection = pacienteCollection;
   }
 
   @Override

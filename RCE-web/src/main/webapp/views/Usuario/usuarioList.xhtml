@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>Usuarios</title>
+  </h:head>
+  <h:body>
+      <h:form>
+        <p:commandButton value="Agregar Usuario" onclick="PF('addPac').show()"/>
+        <p:dataTable value="#{usuarioBean.LUsuario}" var="item" paginator="true" rows="10">
+          <p:column>
+            <f:facet name="header">
+              <h:outputText value="IdUsuario"/>
+            </f:facet>
+            <h:outputText value="#{item.idUsuario}"/>
+          </p:column>
+          <p:column>
+            <f:facet name="header">
+              <h:outputText value="UsuaName"/>
+            </f:facet>
+            <h:outputText value="#{item.usuaName}"/>
+          </p:column>
+          <p:column>
+            <f:facet name="header">
+              <h:outputText value="Nombres"/>
+            </f:facet>
+            <h:outputText value="#{item.idPersona.persNombres} #{item.idPersona.persApepaterno}"/>
+          </p:column>
+          <p:column>
+            <f:facet name="header">
+              <h:outputText value="Rut"/>
+            </f:facet>
+            <h:outputText value="#{item.idPersona.persRun}-#{item.idPersona.persDv}"/>
+          </p:column>
+          <p:column>
+            <f:facet name="header">
+              <h:outputText value="Especialidad"/>
+            </f:facet>
+            <h:outputText value="#{item.idProfesional.idSubespecialidad.idEspecialidad.espeNombre}"/>
+          </p:column>
+          <p:column>
+            <f:facet name="header">
+              <h:outputText value="SubEspecialidad"/>
+            </f:facet>
+            <h:outputText value="#{item.idProfesional.idSubespecialidad.suesNombre}"/>
+          </p:column>
+          <p:column>
+            <f:facet name="header">
+              <h:outputText value="Email"/>
+            </f:facet>
+            <h:outputText value="#{item.idPersona.persEmail}"/>
+          </p:column>
+        </p:dataTable>
+      </h:form>
+      <p:dialog id='admisionPacientes' maximizable="true" header="Admision Pacientes" widgetVar="addPac" showEffect="fade" hideEffect="fade" closeOnEscape="true" 
+                  minimizable="true" height="540" width="800">
+        <ui:include src="usuarioAdd.xhtml"/>
+      </p:dialog>
+  </h:body>
+</html>
+

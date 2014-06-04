@@ -32,5 +32,7 @@ public interface UsuarioFacadeLocal {
   int count();
   
   Usuario login(Usuario usuario);
+
+  public List<Usuario> findAllRelacionado();
   
 }

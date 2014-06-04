@@ -11,6 +11,12 @@
   <managed-bean>
       <managed-bean-name>dialogBean</managed-bean-name>
       <managed-bean-class>cl.hblt.beans.DialogBean</managed-bean-class>
-      <managed-bean-scope>request</managed-bean-scope>
+      <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
+    <managed-bean>
+        <description>Bean que controla la session de mi usuario, creo una instancia y manejo la instancia durante toda la aplicacion</description>
+        <managed-bean-name>usuarioLoginBean</managed-bean-name>
+        <managed-bean-class>cl.hblt.security.UsuarioLoginBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

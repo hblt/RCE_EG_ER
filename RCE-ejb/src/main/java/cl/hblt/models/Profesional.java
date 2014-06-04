@@ -8,6 +8,7 @@ package cl.hblt.models;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,13 +45,10 @@ public class Profesional implements Serializable {
   @Column(name = "prof_activo")
   private Boolean profActivo;
   @OneToMany(mappedBy = "idProfesional")
-  private Collection<Usuario> usuarioCollection;
+  private List<Usuario> usuarioList;
   @JoinColumn(name = "id_subespecialidad", referencedColumnName = "id_subespecialidad")
   @ManyToOne
   private SubEspecialidad idSubespecialidad;
-  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
-  @ManyToOne
-  private Persona idPersona;
   @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo")
   @ManyToOne
   private Cargo idCargo;
@@ -79,12 +77,12 @@ public class Profesional implements Serializable {
   }
 
   @XmlTransient
-  public Collection<Usuario> getUsuarioCollection() {
-    return usuarioCollection;
+  public List<Usuario> getUsuarioList() {
+    return usuarioList;
   }
 
-  public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-    this.usuarioCollection = usuarioCollection;
+  public void setUsuarioList(List<Usuario> usuarioList) {
+    this.usuarioList = usuarioList;
   }
 
   public SubEspecialidad getIdSubespecialidad() {
@@ -93,14 +91,6 @@ public class Profesional implements Serializable {
 
   public void setIdSubespecialidad(SubEspecialidad idSubespecialidad) {
     this.idSubespecialidad = idSubespecialidad;
-  }
-
-  public Persona getIdPersona() {
-    return idPersona;
-  }
-
-  public void setIdPersona(Persona idPersona) {
-    this.idPersona = idPersona;
   }
 
   public Cargo getIdCargo() {

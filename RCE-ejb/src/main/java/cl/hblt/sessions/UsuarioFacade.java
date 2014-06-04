@@ -7,6 +7,7 @@
 package cl.hblt.sessions;
 
 import cl.hblt.models.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -45,6 +46,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
       }
     }catch (NoResultException nre){
     //Ignore this because as per your logic this is ok!
+    }
+    return null;
+  }
+
+  @Override
+  public List<Usuario> findAllRelacionado() {
+    try {
+      Query query = em.createNamedQuery("Usuario.findAllRelacionado");
+      return query.getResultList();
+    } catch (Exception e) {
+    
     }
     return null;
   }

@@ -21,26 +21,31 @@ public class DialogBean {
    * Creates a new instance of DialogBean
    */
   Map<String, Object> propierties;
+  public Integer width= 1280;
+  public Integer height= 600;
+  public Boolean truee = true;
+  public Boolean falsee = false;
  
   
   public DialogBean() {
     propierties = new HashMap<String, Object>();
-    propierties.put("resizable",true);
-    propierties.put("visible", true);
-
+    propierties.put("maximizable", truee);
+    propierties.put("minimizable", truee);
+    propierties.put("closable",truee);
+    propierties.put("width", width);
+    propierties.put("height", height);
+    propierties.put("contentWidth", width);
+    propierties.put("contentHeight", height);
   }
   
-  public void open(String nombreVentana){
-    System.out.println("llego aca: "+nombreVentana);
-    RequestContext.getCurrentInstance().openDialog("pagina", propierties, null);
+  public void getOpen(String nombreVentana){
+    System.out.println("NombreVentana"+RequestContext.getCurrentInstance().toString()+nombreVentana);
+    RequestContext.getCurrentInstance().openDialog(nombreVentana, propierties, null);
   }
   
-  public void demo(){
-    RequestContext.getCurrentInstance().openDialog("pagina", propierties, null);
+  public void getNewDialog(String nombreVentana){
+    System.out.println("NombreVentana"+RequestContext.getCurrentInstance().toString()+nombreVentana);
+    propierties.put("modal", truee);
+    RequestContext.getCurrentInstance().openDialog(nombreVentana, propierties, null);
   }
-  
-  public void demo1(){
-    RequestContext.getCurrentInstance().openDialog("perfil", propierties, null);
-  }
-  
 }

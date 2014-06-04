@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -39,8 +40,9 @@ public class LoginBean {
     HttpServletRequest request = (HttpServletRequest) contenido.getExternalContext().getRequest();
     Usuario rs= usuarioFacade.login(usuario);
     if(rs != null){
-      contenido.getExternalContext().redirect(request.getContextPath() + "/views/desktop.xhtml");
+      System.out.println("usuario"+ rs.getUsuaName());
       extcontenido.getSessionMap().put(CadenasRCE.LOGIN_USER.toString(), rs);
+      contenido.getExternalContext().redirect(request.getContextPath() + "/views/desktop.xhtml");
     }else{
       contenido.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verificar Datos Ingresados"));
     }
